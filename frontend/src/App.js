@@ -1,32 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import Profile from './components/Profile/Profile';
 import NavBar from './components/NavBar/NavBar'
-import DiagMorse from './components/DiagMorse/DiagMorse';
-import HomePage from './components/HomePage/HomePage';
 
-import { connect } from 'react-redux';
-import { recieveUserAC } from './redux/action-creator';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-export class App extends Component {
-  componentDidMount(){
-    this.props.recieveUser()
-    
-  }
+export default class App extends Component {
+
   render() {
     console.log(this.props);
     return (
       <div>
         <NavBar />
-        <HomePage />
       </div>
     )
   }
 }
-
-const mapStateToProps = (state) => ({ state });
-const mapDispatchToProps = dispatch => ({
-  recieveUser: () => dispatch(recieveUserAC(true))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-

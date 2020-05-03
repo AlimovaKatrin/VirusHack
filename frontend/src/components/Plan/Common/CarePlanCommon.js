@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ClendarPerWeek from '../../calendar/PerWeek/perWeek';
+import ClendarPerWeek from '../../Calendar/PerWeek/perWeek';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';

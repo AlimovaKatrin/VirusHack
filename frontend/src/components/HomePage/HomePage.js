@@ -44,7 +44,7 @@ class HomePage extends Component {
         </Row>
         <Row style={{ marginTop: '20px', color: "#047B7C" }}>
           <Col><h1 style={{ textAlign: 'center', color: "#047B7C" }}>Основные возможности</h1>
-            <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', width: '60%', height: '1px', background: '#fff' }} />
+            <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
 
           </Col>
         </Row>
