@@ -1,0 +1,1 @@
+export const RECIEVE_USER = 'RECIEVE_USER';
