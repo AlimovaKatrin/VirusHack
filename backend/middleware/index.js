@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function (app) {
   const express = require("express");
   const morgan = require("morgan");
   const cookieParser = require("cookie-parser");
