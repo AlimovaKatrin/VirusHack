@@ -21,7 +21,7 @@ import {
     console.log(props)
     return (
       <>
-        <Navbar style={styles} variant="dark">
+        <Navbar style={{ backgroundColor: "#047B7C" }} variant="dark">
           <Navbar.Brand>Мастерская заботы</Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">Домой </Nav.Link>
@@ -44,7 +44,7 @@ import {
           <Route path="/profile" component={Profile} />
           <Route path="/plan" component={CarePlanCommon} />
         </Switch>
-      </>
+      </> 
     )
   };
 

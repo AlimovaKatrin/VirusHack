@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const { Patient } = require('../models/patient');
-const { Users } = require('../models/Users');
+const { Users } = require('../models/users');
 const parser = require('../middleware/img-upload')
 
 router.post('/', async (req, res, next) => {
@@ -29,3 +29,5 @@ router.put('/:id', parser.single('image'), async (req, res, next) => {
     next(error);
   }
 });
+
+module.exports = router;
