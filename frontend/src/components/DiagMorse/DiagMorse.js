@@ -1,27 +1,58 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+
+class DiagMorse extends Component {
 
 
-class Profile extends Component {
+  render() {
+    return (<Card style={{ width: '50rem' }}>
+      
+      
+      
+      <Form>
+        
+        
+        
+          
+         
+          
 
 
-render() {
-  return (<Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" width='360px' src="https://342031.selcdn.ru/rusplt/1733/2223/Pel_ttserGL.png" rounded />
-  <Card.Body>
-    <Card.Title>Татьяна Пельтцер</Card.Title>
-    <Card.Subtitle className="mb-2 text-muted">73 года</Card.Subtitle>
-    <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
-    </Card.Text>
-    <Button variant="secondary" size="lg" active>Go somewhere</Button>
-    
-  </Card.Body>
-</Card>)
 
+
+        {['Нарушение зрения', 'Приём снотворных и успокоительных препаратов', 'Случаи падения в прошлом', 'Приём препаратов понижающих а/д', 'Снижение когнитивных функций',
+          'Использование вспомогательных устройств для передвижения', 'Нарушение походки', 'Нарушение равновесия', 'Наличие свыше 4-х хронических заболеваний',
+          'Слабость нижних конечностей', 'Недержание мочи/кала', 'Избыточный вес'].map((value, index) => (
+            <Form.Row > 
+             <Col  sm={8}>
+              <Form.Label>
+                {index + 1}. {value}
+              </Form.Label>
+            </Col>
+            <Col  sm={4}>
+            <div key={`${index}`}>
+              <Form.Check
+                custom
+                type='checkbox'
+                id={`custom-${index}`}
+                label={`Да`}
+              />
+
+
+            </div></Col>
+            </Form.Row>
+
+          ))}
+
+
+      </Form>
+    </Card>)
+
+  }
 }
-}
 
-export default Profile
+export default DiagMorse
