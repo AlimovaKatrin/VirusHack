@@ -11,7 +11,7 @@ import {
 // import Signup from '../SignUp/SignUp'
 
 const styles = {
-  backgroundColor: 'green',
+  backgroundColor: '#047B7C',
 }
 
 const NavBar = () => {
@@ -26,7 +26,7 @@ const NavBar = () => {
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Искать" className="mr-sm-2" />
-          <Button variant="success">Поиск</Button>
+          <Button style={{backgroundColor: "#44A8A8"}}>Поиск</Button>
         </Form>
       </Navbar>
 

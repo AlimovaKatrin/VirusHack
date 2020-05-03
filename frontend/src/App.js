@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css'
 import Profile from './components/Profile/Profile';
-import NavBar from './Components/NavBar/NavBar'
+import NavBar from './components/NavBar/NavBar'
 import DiagMorse from './components/DiagMorse/DiagMorse';
 import HomePage from './components/HomePage/HomePage';
 
@@ -17,7 +17,6 @@ export class App extends Component {
     console.log(this.props);
     return (
       <div>
-        <Profile />
         <NavBar />
         <HomePage />
       </div>
