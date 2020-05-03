@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
+import NavBar from './Components/NavBar/NavBar'
 
 import { connect } from 'react-redux';
 import { recieveUserAC } from './redux/action-creator';
@@ -13,7 +14,7 @@ export class App extends Component {
     console.log(this.props);
     return (
       <div>
-        <h1>Hello React</h1>
+        <NavBar />
       </div>
     )
   }
