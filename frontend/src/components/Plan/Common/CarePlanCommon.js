@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import ClendarPerWeek from '../../Calendar/PerWeek/perWeek';
+import ClendarPerWeek from '../../Calendar/PerWeek/PerWeek';
+import ClendarPerDay from '../../Calendar/PerDay/PerDay';
 
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,22 +13,24 @@ export class CarePlanCommon extends Component {
         console.log(this.props);
         return (
             <div>
-                <h1>CarePlanCommon</h1>
+                <h1>План ухода</h1>
                 <Container>
                     <Row>
-                        <Col sm={8}><ClendarPerWeek/></Col>
+                        <Col sm={10}><ClendarPerWeek /></Col>
                         <Col sm={4}>sm=4</Col>
                     </Row>
                     <Row>
-                        <Col sm>sm=true</Col>
-                        <Col sm>sm=true</Col>
-                        <Col sm>sm=true</Col>
+                        <Col sm><ClendarPerDay /></Col>
+                        <Col sm><ClendarPerDay color='warning'/></Col>
+                        <Col sm><ClendarPerDay /></Col>
                     </Row>
+
                 </Container>
             </div>
         )
     }
 }
 
-export default CarePlanCommon;
+const mapStateToProps = (state) => ({ state });
 
+export default connect(mapStateToProps)(CarePlanCommon);

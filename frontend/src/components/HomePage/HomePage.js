@@ -51,7 +51,7 @@ class HomePage extends Component {
         <Row style={{ marginTop: '20px' }}>
           <CardDeck>
             <Card>
-              <Card.Img variant="top" src="../img/image002.jpg" />
+              <Card.Img variant="top" src="../img/image002.jpg" /> 
               <Card.Body>
                 <Card.Title>Карточка ухода пациента</Card.Title>
                 <Card.Text>
