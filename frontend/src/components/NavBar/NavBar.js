@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import {
-  Navbar, Nav, Form, FormControl, Button
-} from 'react-bootstrap';
-import {
   Switch,
   Route,
   Link,
 } from "react-router-dom";
-// import Login from '../Login/Login'
-// import Signup from '../SignUp/SignUp'
+import { connect } from 'react-redux';
 
-class NavBar extends Component {
+import Home from '../HomePage/HomePage';
+import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
+import Profile from '../Profile/Profile';
+import CarePlanCommon from '../Plan/Common/CarePlanCommon';
 
-  render() {
+import {
+  Navbar, Nav, Form, FormControl, Button
+} from 'react-bootstrap';
+
+  const NavBar = (props) => {
+    const { state } = props;
+    console.log(props)
     return (
       <>
-        <Navbar style={{ backgroundColor: "#047B7C" }} variant="dark">
-          <Navbar.Brand as={Link} to="/">Мастерская заботы</Navbar.Brand>
+        <Navbar style={styles} variant="dark">
+          <Navbar.Brand>Мастерская заботы</Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/login">Войти </Nav.Link>
-            <Nav.Link as={Link} to="/signup">Зарегистрироваться </Nav.Link>
+            <Nav.Link as={Link} to="/">Домой </Nav.Link>
+            {state.user ? <Nav.Link as={Link} to="/profile"> Профиль </Nav.Link> : <Nav.Link as={Link} to="/login">Войти </Nav.Link>}
+            {state.user ? <Nav.Link as={Link} to="/plan"> План </Nav.Link> : <Nav.Link as={Link} to="/signup">Зарегистрироваться </Nav.Link>}
+
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Искать" className="mr-sm-2" />
@@ -29,17 +37,17 @@ class NavBar extends Component {
 
         <Switch>
           <Route exact path="/">
-            {/* <Home /> */}
+            <Home />
           </Route>
-          <Route path="/login">
-            {/* <Login /> */}
-          </Route>
-          <Route path="/signup">
-            {/* <Signup /> */}
-          </Route>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/plan" component={CarePlanCommon} />
         </Switch>
       </>
     )
-  }
-}
-export default NavBar;
+  };
+
+  const mapStateToProps = (state) => ({ state });
+
+  export default connect(mapStateToProps)(NavBar);
