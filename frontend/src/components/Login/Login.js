@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
+import { connect } from 'react-redux';
+import { recieveUserAC } from '../../redux/action-creator';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class Login extends Component {
@@ -26,12 +31,11 @@ export class Login extends Component {
       body: JSON.stringify({ email, password }),
     });
     const result = await response.json();
-    console.log(this.state);
+    console.log(await result);
 
     if (result.user) {
-      this.setState({
-        user: result.user,
-      });
+      this.props.recieveUser(await result.user);
+      this.props.history.push('/profile')
     } else if (result.message) {
       this.setState({
         message: result.message,
@@ -46,6 +50,8 @@ export class Login extends Component {
   };
 
   render() {
+    console.log(this.props);
+    
     return (
       <Container className="login">
         <Form onSubmit={this.handleSubmit}>
@@ -80,4 +86,9 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({ state });
+const mapDispatchToProps = dispatch => ({
+  recieveUser: (user) => dispatch(recieveUserAC(user))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { Users } = require('../models/Users');
+const { Users } = require('../models/users');
 
 const saltRounds = 10;
 
@@ -30,7 +30,8 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async(req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = Users.findOne({ email });
+    
+    const user = await Users.findOne({ email });
     if (user) {
       const isEqual = await bcrypt.compare(password, user.password);
       if (isEqual) {

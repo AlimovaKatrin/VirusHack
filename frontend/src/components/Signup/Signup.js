@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export class Signup extends Component {
+import { connect } from 'react-redux';
+import { recieveUserAC } from '../../redux/action-creator';
+
+class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -29,16 +34,17 @@ export class Signup extends Component {
     }
     const response = await fetch('/auth/signup', requestOptions)
     const result = await response.json();
-    console.log(result);
-    // this.setState({ user:  })
+    if (result.user) {
+      this.props.recieveUser(await result.user);
+      this.props.history.push('/profile')
+    }
   };
-
+  
   handleChange = (event) => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
-    console.log(this.state);
   };
-
+  
   render() {
     return (
       <Container className="sign-in">
@@ -94,4 +100,9 @@ export class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = (state) => ({ state });
+const mapDispatchToProps = dispatch => ({
+  recieveUser: (user) => dispatch(recieveUserAC(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

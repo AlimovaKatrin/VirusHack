@@ -7,7 +7,7 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case RECIEVE_USER:
-            return {user:action.user};
+             return {user: action.user};
         default:
             return state;
     }
