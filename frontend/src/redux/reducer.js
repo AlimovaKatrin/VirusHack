@@ -4,7 +4,7 @@ const initialState = {
     user: false
 };
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case RECIEVE_USER:
             return {user:action.user};
