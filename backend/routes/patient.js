@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id', parser.single('image'), async (req, res, next) => {
+router.put('/:id', parser.single('file'), async (req, res, next) => {
   try {
     console.log(req.file)
     const _id = req.params.id;
@@ -29,5 +29,18 @@ router.put('/:id', parser.single('image'), async (req, res, next) => {
     next(error);
   }
 });
+
+router.post('/upload', parser.single('file'), async (req, res, next) => {
+  try {
+    const image = {};
+    image.url = req.file.url;
+    image.id = req.file.public_id;
+    res.send({ imageUrl: image.url });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 module.exports = router;
