@@ -29,7 +29,7 @@ function ClendarPerWeek(props) {
         //             body: JSON.stringify({
         //                 id: props.prop.match.params.id,
         //                 userId: props.prop.state.user._id,
-        //                 shedules: props.state.carePlan
+        //                 schedules: props.state.carePlan
         //             })
         //         }
         //         );
