@@ -18,7 +18,6 @@ router.post('/signup', async (req, res, next) => {
           password: await bcrypt.hash(password, saltRounds),
           status,
         });
-        console.log(user);
         req.session.user = user;
         res.send({user});
       }

@@ -17,7 +17,7 @@ class Profile extends Component {
           <Card.Text>
             Some quick example text to build on the card title and make up the bulk of
             the card's content.
-    </Card.Text>
+          </Card.Text>
           <ButtonGroup aria-label="Basic example">
             <Button variant="secondary" style={{ backgroundColor: "#047B7C" }} size="mg" active>Дневник боли</Button>
             <Button variant="secondary" style={{ backgroundColor: "#047B7C" }} size="mg" active>План ухода</Button>
