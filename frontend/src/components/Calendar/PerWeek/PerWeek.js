@@ -18,26 +18,26 @@ function ClendarPerWeek(props) {
     const cal = useRef(null);
     console.log('-------------', props);
     
-        useEffect(() => {
-            const fetchData = async () => {
-                const response = await fetch(
-                    `/patient/${props.prop.match.params.id}/carePlan`, {
-                    method: 'PUT',
-                    headers: {
-                       'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: props.prop.match.params.id,
-                        userId: props.prop.state.user._id,
-                        shedules: props.state.carePlan
-                    })
-                }
-                );
-                console.log(await response.json());
+        // useEffect(() => {
+        //     const fetchData = async () => {
+        //         const response = await fetch(
+        //             `/patient/${props.prop.match.params.id}/carePlan`, {
+        //             method: 'PUT',
+        //             headers: {
+        //                'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify({
+        //                 id: props.prop.match.params.id,
+        //                 userId: props.prop.state.user._id,
+        //                 shedules: props.state.carePlan
+        //             })
+        //         }
+        //         );
+        //         console.log(await response.json());
 
-            };
-            fetchData()
-        },[props.state.carePlan])
+        //     };
+        //     fetchData()
+        // },[props.state.carePlan])
     
     // клик на созданную ячейку в календаре
     const onClickSchedule = useCallback(e => {
