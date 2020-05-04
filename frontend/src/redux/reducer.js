@@ -10,7 +10,9 @@ export const reducer = (state = initialState, action) => {
         case RECIEVE_USER:
             return { ...state, user: action.user };
         case ADD_CURRENT_DAY_EVENT:
-            return { ...state, ['carePlan']: [...state.carePlan,action.day] };
+    
+                return { ...state, ['carePlan']: [...state.carePlan,action.day] };
+          
         case ADD_PATIENT:
             return { ...state, user: action.user };
         default:

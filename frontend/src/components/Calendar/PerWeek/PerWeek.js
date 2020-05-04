@@ -13,38 +13,17 @@ import "tui-time-picker/dist/tui-time-picker.css";
 import { calendars, schedules } from './mockup'
 
 function ClendarPerWeek(props) {
-    const [trigger, setTrigger] = useState(false);
-    const [data, setData] = useState();
-    const cal = useRef(null);
-    console.log('-------------', props);
-    
-        // useEffect(() => {
-        //     const fetchData = async () => {
-        //         const response = await fetch(
-        //             `/patient/${props.prop.match.params.id}/carePlan`, {
-        //             method: 'PUT',
-        //             headers: {
-        //                'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify({
-        //                 id: props.prop.match.params.id,
-        //                 userId: props.prop.state.user._id,
-        //                 schedules: props.state.carePlan
-        //             })
-        //         }
-        //         );
-        //         console.log(await response.json());
 
-        //     };
-        //     fetchData()
-        // },[props.state.carePlan])
-    
+    const [data, setData] = useState();
+
+    const cal = useRef(null);
     // клик на созданную ячейку в календаре
     const onClickSchedule = useCallback(e => {
+        
         console.log('onClickSchedule', e);
     }, []);
 
-    const onBeforeCreateSchedule = useCallback(scheduleData => {
+    const onBeforeCreateSchedule = useCallback((scheduleData )=> {
         // console.log('onBeforeCreateSchedule', scheduleData);
         // событие создается
 
@@ -65,8 +44,8 @@ function ClendarPerWeek(props) {
             },
             state: scheduleData.state
         };
-        setTrigger(!trigger);
         props.addCurrentDayEvent(schedule)
+        
         cal.current.calendarInst.createSchedules([schedule]);
     }, []);
 

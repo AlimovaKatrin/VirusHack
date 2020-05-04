@@ -27,12 +27,14 @@ class CreatePatient extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.state.user) this.props.history.push('/login')
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(this.state);
+    
     const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = this.state;
     const { _id } = this.props.state.user;
     const requestOptions = {
@@ -144,7 +146,7 @@ class CreatePatient extends Component {
               Имя лечащего врача
           </Form.Label>
             <Col sm={10}>
-              <Form.Control type="text" name="doctorSurname" placeholder="Имя лечащего врача" onChange={this.handleChange} required />
+              <Form.Control type="text" name="doctorName" placeholder="Имя лечащего врача" onChange={this.handleChange} required />
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="doctorName">

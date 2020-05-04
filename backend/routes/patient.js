@@ -19,7 +19,7 @@ router
   })
   .post(async (req, res, next) => { //создать пациента
     try {
-      const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = req.body;
+      const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone,_id } = req.body;
 
       const patient = await Patient.create({
         name, surname, sex, age, address, phone, diagnosis, responsiblePerson: _id, doctor: { doctorName, doctorSurname, doctorPhone }

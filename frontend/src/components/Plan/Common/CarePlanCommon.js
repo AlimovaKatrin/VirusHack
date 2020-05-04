@@ -9,7 +9,10 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class CarePlanCommon extends Component {
-
+    componentDidMount() {
+        if (!this.props.state.user) this.props.history.push('/login')
+      }
+      
     render() {
         if(!this.props.state.user) {this.props.history.push('/login')}
 
