@@ -17,15 +17,18 @@ module.exports = function (app) {
   // initialize cookie-parser to allow us access the cookies stored in the browser.
   app.use(cookieParser());
 
+  const fileStoreOptions = {};
+
   // initialize express-session to allow us track the logged-in user across sessions.
   app.use(
     session({
-      store: new FileStore(),
+      store: new FileStore(fileStoreOptions),
       key: "user_sid",
       secret: "anything here",
       resave: false,
       saveUninitialized: false,
       cookie: {
+        path: '/',
         expires: 600000
       }
     })

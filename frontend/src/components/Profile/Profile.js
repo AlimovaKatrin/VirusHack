@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-
 import * as pdfMake from 'pdfmake/build/pdfmake';
-
 const pdfMakeX = require('pdfmake/build/pdfmake.js');
 const pdfFontsX = require('pdfmake-unicode/dist/pdfmake-unicode.js');
 pdfMakeX.vfs = pdfFontsX.pdfMake.vfs;
@@ -11,20 +9,19 @@ pdfMakeX.vfs = pdfFontsX.pdfMake.vfs;
 class Profile extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: 'Татьяна',
       surname: 'Пельтцер',
       age: 73,
+      sex: 'Женщина',
       phone: '8954557896',
-      photo: 'https://342031.selcdn.ru/rusplt/1733/2223/Pel_ttserGL.png',
+      photo: '../img/patient1.png',
       diagnosis: 'Падения',
       graphics: '../img/pain20200503.jpg',
     };
   }
 
   savePdf = async () => {
-
     const toDataURL = url => fetch(url)
       .then(response => response.blob())
       .then(blob => new Promise((resolve, reject) => {
@@ -40,48 +37,32 @@ class Profile extends Component {
     .then(dataUrl => {
         const docDefinition = {
           content: [
-            {
-              text: `Карточка пациента`,
-              style: 'subheader'
-            },
-            {
-              text: `${this.state.name} ${this.state.surname}
-              `,
-              style: 'header'
-            },
-            {
-              alignment: 'justify',
+            { text: `Карточка пациента`,
+              style: 'subheader' },
+            { text: `${this.state.name} ${this.state.surname}
+              `, style: 'header'  },
+             { alignment: 'justify',
               columns: [
                 {
                   text: `
                          Возраст: ${this.state.age} 
-                         Телефон: ${this.state.phone} `,
+                         Пол: ${this.state.sex} 
+                         Телефон: ${this.state.phone} 
+                         `,
                   style: 'main'
                 },
-                {
-                  image: dataUrl,
-                  width: 150
-                }
-              ],
+                { image: dataUrl,
+                  width: 150 }              
+                ],
             },
-            {
-              text: `Диагноз
-              `,
-              style: 'subheader'
-            },
-            {
-              text: `${this.state.diagnosis}`,
-              style: 'main'
-            },
-            {
-              text: `График боли
-              `,
-              style: 'subheader'
-            },
-            {
-              image: graphsUrl,
-              width: 500
-            },
+            { text: `Диагноз
+              `, style: 'subheader' },
+            { text: `${this.state.diagnosis}`,
+              style: 'main' },
+            { text: `График боли
+              `, style: 'subheader' },
+            { image: graphsUrl,
+              width: 500 },
 
           ],
           styles: {
@@ -102,26 +83,14 @@ class Profile extends Component {
           }
         };
         
-        let date1 = new Date().toISOString().slice(0, 10)
-        
-        pdfMake.createPdf(docDefinition).download(`${this.state.surname}-${date1}.pdf`);
-      })
-
-
-
+        let today = new Date().toISOString().slice(0, 10)
+        let filename = this.state.surname + this.state.name[0] + '_' + today
+        pdfMake.createPdf(docDefinition).download(`${filename}.pdf`);
+      }
+    )
   }
 
-  //     let docDefinition = {
-  //       content:}
-
-
-
-
-
   render() {
-
-
-
     return (<Card style={{ width: '18rem' }}>
       <Card.Img variant="top" width='360px' src="https://342031.selcdn.ru/rusplt/1733/2223/Pel_ttserGL.png" />
       <Card.Body>
@@ -132,9 +101,6 @@ class Profile extends Component {
           the card's content.
     </Card.Text>
         <Button variant="secondary" size="lg" active>Go somewhere</Button>
-
-
-
         <Button
           variant="primary"
           onClick={this.savePdf}

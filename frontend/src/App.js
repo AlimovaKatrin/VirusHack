@@ -13,9 +13,8 @@ export default class App extends Component {
     console.log(this.props);
     return (
       <div>
-        <CreatePatient />
+        <Profile />
 
-        <PrfilaktikaPadenij />
         
       </div>
     )

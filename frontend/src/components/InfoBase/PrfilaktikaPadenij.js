@@ -16,7 +16,6 @@ class PrfilaktikaPadenij extends Component {
     return (
 
       <Container>
-
           <Col><h1 style={{ textAlign: 'center', color: "#047B7C" }}>Профилактика падений</h1>
             <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
           </Col>
@@ -32,7 +31,6 @@ class PrfilaktikaPadenij extends Component {
           <li>переживает постинсультное состояние;</li>
           <li>страдает от деменции;</li>
         </ul>
-
 
         <Alert variant={'warning'}>
           <Alert.Heading>Важно!</Alert.Heading>
