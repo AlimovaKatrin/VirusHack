@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/Row'
 
 class HomePage extends Component {
 
-
   render() {
     return (
       <Container>
@@ -51,11 +50,7 @@ class HomePage extends Component {
         <Row style={{ marginTop: '20px' }}>
           <CardDeck>
             <Card>
-<<<<<<< HEAD
               <Card.Img variant="top" src="../img/image002.jpg" />
-=======
-              <Card.Img variant="top" src="../img/image002.jpg" /> 
->>>>>>> 78c063e88cf9c44bc409b291df16402de8b08012
               <Card.Body>
                 <Card.Title>Карточка ухода пациента</Card.Title>
                 <Card.Text>
@@ -67,30 +62,20 @@ class HomePage extends Component {
 
             </Card>
             <Card>
-<<<<<<< HEAD
             <Card.Img variant="top" src="../img/image003.jpg" />
-=======
-              <Card.Img variant="top" src="../img/image003.jpg" />
->>>>>>> 78c063e88cf9c44bc409b291df16402de8b08012
               <Card.Body>
                 <Card.Title>Персонализированные рекомендации</Card.Title>
                 <Card.Text>
                   - Опрос о состоянии больного<br />
               - Персональные рекомендации на основе опроса<br />
-              - План ухода и запланированная
-возможность изменения входных данных<br />
+              - План ухода и запланированная возможность изменения входных данных<br />
                 </Card.Text>
               </Card.Body>
 
             </Card>
             <Card>
-<<<<<<< HEAD
             <Card.Img variant="top" src="../img/image001.jpg" />              
             <Card.Body>
-=======
-              <Card.Img variant="top" src="../img/image001.jpg" />
-              <Card.Body>
->>>>>>> 78c063e88cf9c44bc409b291df16402de8b08012
                 <Card.Title>Обучение</Card.Title>
                 <Card.Text>
                   - База знаний<br />
