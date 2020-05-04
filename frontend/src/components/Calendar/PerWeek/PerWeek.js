@@ -12,10 +12,33 @@ import "tui-time-picker/dist/tui-time-picker.css";
 
 import { calendars, schedules } from './mockup'
 
- function ClendarPerWeek(props) {
+function ClendarPerWeek(props) {
+    const [trigger, setTrigger] = useState(false);
     const [data, setData] = useState();
     const cal = useRef(null);
- 
+    console.log('-------------', props);
+    
+        useEffect(() => {
+            const fetchData = async () => {
+                const response = await fetch(
+                    `/patient/${props.prop.match.params.id}/carePlan`, {
+                    method: 'PUT',
+                    headers: {
+                       'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: props.prop.match.params.id,
+                        userId: props.prop.state.user._id,
+                        shedules: props.state.carePlan
+                    })
+                }
+                );
+                console.log(await response.json());
+
+            };
+            fetchData()
+        },[props.state.carePlan])
+    
     // клик на созданную ячейку в календаре
     const onClickSchedule = useCallback(e => {
         console.log('onClickSchedule', e);
@@ -24,6 +47,9 @@ import { calendars, schedules } from './mockup'
     const onBeforeCreateSchedule = useCallback(scheduleData => {
         // console.log('onBeforeCreateSchedule', scheduleData);
         // событие создается
+
+
+
         const schedule = {
             id: String(Math.random()),
             title: scheduleData.title,
@@ -39,6 +65,7 @@ import { calendars, schedules } from './mockup'
             },
             state: scheduleData.state
         };
+        setTrigger(!trigger);
         props.addCurrentDayEvent(schedule)
         cal.current.calendarInst.createSchedules([schedule]);
     }, []);
@@ -123,7 +150,7 @@ import { calendars, schedules } from './mockup'
             useDetailPopup={true}
             template={templates}
             calendars={calendars}
-            schedules={schedules}
+            schedules={[...schedules, ...props.state.carePlan]}
             // theme={{'common.border': '3px solid black'}}
 
             week={{

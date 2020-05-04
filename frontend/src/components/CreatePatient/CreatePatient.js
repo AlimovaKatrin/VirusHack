@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+import { addPatientAC } from '../../redux/action-creator'
+
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form'
-
+// рег пациента
 
 class CreatePatient extends Component {
   constructor(props) {
@@ -20,23 +24,27 @@ class CreatePatient extends Component {
     }
   }
 
+  componentWillMount() {
+    if (!this.props.state.user) this.props.history.push('/login')
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const { name, surname, age, sex, address, phone, diagnosis } = this.state;
+    const { _id } = this.props.state.user;
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name, surname, age, sex, address, phone, diagnosis })
+      body: JSON.stringify({ name, surname, age, sex, address, phone, diagnosis,_id })
     }
     const response = await fetch('/patient', requestOptions)
     const result = await response.json();
-    console.log(result);
-    // if (result.patient) {
-    //   this.props.recieveUser(await result.user);
-    //   this.props.history.push('/profile')
-    // }
+    if (result) {
+      this.props.addPatient(result);
+      this.props.history.push('/profile')
+    }
   };
 
   handleChange = (event) => {
@@ -135,6 +143,13 @@ class CreatePatient extends Component {
           </Form.Group>
         </Form>
       </Container>)
+
   }
 }
-export default CreatePatient
+
+const mapStateToProps = (state) => ({ state });
+const mapDispatchToProps = dispatch => ({
+  addPatient: (patient) => dispatch(addPatientAC(patient))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(CreatePatient);

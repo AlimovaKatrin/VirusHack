@@ -6,7 +6,7 @@ const parser = require('../middleware/img-upload')
 
 
 router
-  .route('/')
+  .route('/') // карточки профайла
   .get(async (req, res, next) => {
     try {
       console.log(req.session);
@@ -17,33 +17,36 @@ router
       next(error);
     }
   })
-    .post(async (req, res, next) => {
-      try {
-        const { _id } = req.session.user;
-        const { name, surname, sex, age, address, phone, diagnosis } = req.body;
-        const patient = await Patient.create({
-          name, surname, sex, age, address, phone, diagnosis, responsiblePerson: _id,
-        });
-        await Users.updateOne({ _id }, { $pull:{ patients:[patient] } });
-        res.send({ patient });
-      } catch (error) {
-        next(error);
-      }
-    });
+  .post(async (req, res, next) => { //создать пациента
+    try {
+      const { name, surname, sex, age, address, phone, diagnosis, _id } = req.body;
+      console.log(req.body);
 
-router.put('/:id', parser.single('file'), async (req, res, next) => {
+      const patient = await Patient.create({
+        name, surname, sex, age, address, phone, diagnosis, responsiblePerson: _id,
+      });
+      await Users.updateOne({ _id }, { $push: { patients: [patient] } });
+      const updUser = await Users.findOne({ _id })
+      res.send(updUser);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+router.put('/:id', parser.single('file'), async (req, res, next) => { // добавить фото 
   try {
     const _id = req.params.id;
     const image = {};
     image.url = req.file.url;
     image.id = req.file.public_id;
     await Patient.updateOne({ _id }, { $set: { image: image.url } });
+    const patient = await Patient.findOne({ _id });
+    await Users.updateOne({ _id: userId, 'patients._id': patientId }, { $set: { 'patients.$': { patient } } });
     res.send({ imageUrl: image.url });
   } catch (error) {
     next(error);
   }
 });
-
 router
   .route('/:id/pain')
   .get(async (req, res, next) => {
@@ -58,13 +61,27 @@ router
   .put(async (req, res, next) => {
     try {
       const { options, id } = req.body;
-      await Patient.updateOne({ _id }, { $pull: { painStatistics: [options] } });
+      await Patient.updateOne({ _id }, { $push: { painStatistics: [options] } });
       const patient = await Patient.findOne({ _id });
+      await Users.updateOne({ _id: userId, 'patients._id': patientId }, { $set: { 'patients.$': { patient } } });
       res.send({ painStatistics: patient.painStatistics });
     } catch (error) {
       next(error);
     }
   });
+router.put('/:id/carePlan', async (req, res, next) => {
+  try {
+    const { id, schedules,userId } = req.body;
+    console.log(req.body);
+    
+    await Patient.updateOne({ _id: id }, { $set: { carePlan: [schedules] } });
+    const patient = await Patient.findOne({ _id: id });
+    await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': { patient } } });
+    res.send(200);
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 module.exports = router;
