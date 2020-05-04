@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
-
+import Card from './components/Card/Card'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,7 +11,8 @@ export default class App extends Component {
     console.log(this.props);
     return (
       <div>
-        <NavBar />
+        {/* <NavBar /> */}
+        <Card />
       </div>
     )
   }
