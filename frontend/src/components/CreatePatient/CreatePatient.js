@@ -34,7 +34,7 @@ class CreatePatient extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = this.state;
-    const { _id } = this.props.state.user;
+    const { _id } = this.props.state.user; // КЛЮЧИТЬ REDUX И ВЫТАСКИВАТЬ ИЗ СТОРА ID А ДЛЯ ПЕРЕДАЧИ НА БЭК!!!!!
     const requestOptions = {
       method: 'POST',
       headers: {
