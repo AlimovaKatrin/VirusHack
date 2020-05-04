@@ -137,5 +137,5 @@ export const schedules = [
         body: "Каша, Смузи",
         start: 'Sun May 04 2020 09:00:00 GMT+0300 (Moscow Standard Time)',
         end: 'Sun May 04 2020 10:30:00 GMT+0300 (Moscow Standard Time)'
-    }, 
+    }
 ];

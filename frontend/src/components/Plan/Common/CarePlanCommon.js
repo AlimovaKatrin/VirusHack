@@ -11,13 +11,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export class CarePlanCommon extends Component {
 
     render() {
-        console.log(this.props);
+        if(!this.props.state.user) {this.props.history.push('/login')}
+
         return (
             <div>
                 <h1>План ухода</h1>
                 <Container>
                     <Row>
-                        <Col sm={10}><ClendarPerWeek /></Col>
+                        <Col sm={10}><ClendarPerWeek prop={this.props}/></Col>
                         <Col sm={1}>
                             <ClendarPerDay />
                             <br></br>
