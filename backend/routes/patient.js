@@ -35,13 +35,13 @@ router
 
 router.put('/:id', parser.single('file'), async (req, res, next) => { // добавить фото 
   try {
-    const _id = req.params.id;
+    const { id ,userId } = req.body;
     const image = {};
     image.url = req.file.url;
     image.id = req.file.public_id;
-    await Patient.updateOne({ _id }, { $set: { image: image.url } });
+    await Patient.updateOne({ _id: id }, { $set: { image: image.url } });
     const patient = await Patient.findOne({ _id });
-    await Users.updateOne({ _id: userId, 'patients._id': patientId }, { $set: { 'patients.$': { patient } } });
+    await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
     res.send({ imageUrl: image.url });
   } catch (error) {
     next(error);
@@ -60,10 +60,10 @@ router
   })
   .put(async (req, res, next) => {
     try {
-      const { options, id } = req.body;
-      await Patient.updateOne({ _id }, { $push: { painStatistics: [options] } });
+      const { options, id, userId } = req.body;
+      await Patient.updateOne({ _id: id }, { $push: { painStatistics: [options] } });
       const patient = await Patient.findOne({ _id });
-      await Users.updateOne({ _id: userId, 'patients._id': patientId }, { $set: { 'patients.$': { patient } } });
+      await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
       res.send({ painStatistics: patient.painStatistics });
     } catch (error) {
       next(error);
@@ -72,12 +72,11 @@ router
 router.put('/:id/carePlan', async (req, res, next) => {
   try {
     const { id, schedules,userId } = req.body;
-    console.log(req.body);
-    
-    await Patient.updateOne({ _id: id }, { $set: { carePlan: [schedules] } });
+    console.log(userId);
+    await Patient.updateOne({ _id: id }, { $set: { carePlan: schedules } });
     const patient = await Patient.findOne({ _id: id });
-    await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': { patient } } });
-    res.send(200);
+    await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
