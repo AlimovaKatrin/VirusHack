@@ -7,7 +7,7 @@ const saltRounds = 10;
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const { name, email, password, status } = req.body;
+    const { name, email, password, status, phone } = req.body;
     const userCheck = await Users.findOne({ email });
       if (userCheck) {
         res.send({message: 'Такой email уже зарегистрирован'});
@@ -17,6 +17,7 @@ router.post('/signup', async (req, res, next) => {
           email,
           password: await bcrypt.hash(password, saltRounds),
           status,
+          phone,
         });
         req.session.user = user;
         res.send({user});
