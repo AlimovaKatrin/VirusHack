@@ -12,6 +12,14 @@ export class PatientCard extends Component {
     }
   }
 
+  // componentDidMount() {
+  //   const response = await fetch(`/patient/${id}`, {
+  //     method: 'GET'
+  //   })
+  //   const result = await response.json();
+  //   console.log(result);
+  // };
+
   onChangeHandler = (e) => {
     this.setState({
       file: e.target.files[0],
@@ -127,6 +135,9 @@ export class PatientCard extends Component {
             </Col>
             <Col>
               <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>План ухода</Button>
+            </Col>
+            <Col>
+              <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Выгрузка в PDF</Button>
             </Col>
           </Row>
         </Container>
