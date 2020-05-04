@@ -19,8 +19,7 @@ router
   })
   .post(async (req, res, next) => { //создать пациента
     try {
-      const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = req.body;
-
+      const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone, _id } = req.body;
       const patient = await Patient.create({
         name, surname, sex, age, address, phone, diagnosis, responsiblePerson: _id, doctor: { doctorName, doctorSurname, doctorPhone }
       });
@@ -31,21 +30,31 @@ router
       next(error);
     }
   });
-
-router.put('/:id', parser.single('file'), async (req, res, next) => { // добавить фото 
+router.put('/:id', async (req, res, next) => { // добавить фото
   try {
-    const { id ,userId } = req.body;
+    const { id, userId, imageUrl } = req.body;
+    console.log(req.body);
+    await Patient.updateOne({ _id: id }, { $set: { image: imageUrl } });
+    const patient = await Patient.findOne({ _id: id });
+    await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
+    const user = await Users.findOne({ _id: userId });
+    res.send({ user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/upload', parser.single('file'), async (req, res, next) => { // добавить фото
+  try {
     const image = {};
     image.url = req.file.url;
     image.id = req.file.public_id;
-    await Patient.updateOne({ _id: id }, { $set: { image: image.url } });
-    const patient = await Patient.findOne({ _id });
-    await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
     res.send({ imageUrl: image.url });
   } catch (error) {
     next(error);
   }
 });
+
 router
   .route('/:id/pain')
   .get(async (req, res, next) => {
@@ -71,7 +80,7 @@ router
   
 router.put('/:id/carePlan', async (req, res, next) => {
   try {
-    const { id, schedules,userId } = req.body;
+    const { id, schedules, userId } = req.body;
     console.log(userId);
     await Patient.updateOne({ _id: id }, { $set: { carePlan: schedules } });
     const patient = await Patient.findOne({ _id: id });
@@ -81,6 +90,7 @@ router.put('/:id/carePlan', async (req, res, next) => {
     next(error);
   }
 });
+
 
 
 module.exports = router;
