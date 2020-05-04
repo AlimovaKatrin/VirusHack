@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { usersSchema } = require('./users');
+const { Users } = require('./users');
 
 const patientSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -9,7 +9,10 @@ const patientSchema = new mongoose.Schema({
   address: { type: String, required: true },
   phone: { type: String, required: true },
   diagnosis: { type: String, required: true },
-  responsiblePerson: usersSchema,
+  responsiblePerson: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+  },
   doctor: Object,
   painStatistics: Array,
   carePlan: Array,

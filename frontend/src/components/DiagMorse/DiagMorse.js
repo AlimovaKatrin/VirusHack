@@ -24,14 +24,9 @@ class DiagMorse extends Component {
                 id={`custom-${index}`}
                 label={`Да`}
               />
-
-
             </div></Col>
             </Form.Row>
-
           ))}
-
-
       </Form>
     </Card>)
 
