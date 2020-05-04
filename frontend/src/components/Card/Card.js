@@ -3,7 +3,7 @@ import styles from './Card.module.css'
 import {
   Container, Row, Col, Image, ButtonGroup, Button
 } from 'react-bootstrap';
-
+// расширеная карта
 export class Card extends Component {
   constructor(props) {
     super(props)
@@ -44,7 +44,7 @@ export class Card extends Component {
         <Container style={{ border: "3px solid lightgrey", textAlign: "center", width: "700px" }}>
           <Row>
             <Col>
-              <Image src="https://memepedia.ru/wp-content/uploads/2016/03/large_p19d7nh1hm1i37tnuim11ebqo5c1.jpg" style={{ width: '150px', height: '150px' }} roundedCircle />
+              <Image src="https://342031.selcdn.ru/rusplt/1733/2223/Pel_ttserGL.png" style={{ width: '150px', height: '150px' }} roundedCircle />
             </Col>
             <Col>
               <h3>Сиделка</h3>

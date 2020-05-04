@@ -9,12 +9,12 @@ console.log( new Date(new Date().setHours(new Date().getHours())));
 const {color} = props 
   return (
     <>
-<Card bg={color} style={{ width: '18rem' }}>
-  <Card.Header >Featured</Card.Header>
+<Card style={{ width: '18rem' , backgroundColor: color }}>
+  <Card.Header >Дата</Card.Header>
   <ListGroup>
-    <ListGroup.Item>Cras justo odio</ListGroup.Item>
-    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+    <ListGroup.Item>Важные данные</ListGroup.Item>
+    <ListGroup.Item>Лекарства</ListGroup.Item>
+    <ListGroup.Item>События</ListGroup.Item>
   </ListGroup>
 </Card>
 

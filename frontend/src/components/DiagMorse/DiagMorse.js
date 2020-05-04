@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
-
+// тест на падение если сумма больще 4  
 class DiagMorse extends Component {
   render() {
     return (<Card style={{ width: '50rem' }}>

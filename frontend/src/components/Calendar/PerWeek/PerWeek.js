@@ -39,7 +39,7 @@ import { calendars, schedules } from './mockup'
             },
             state: scheduleData.state
         };
-        props.addCurrentDayEvent(schedule)
+        // props.addCurrentDayEvent(schedule) --------- !!!!!!!!!!!!!
         cal.current.calendarInst.createSchedules([schedule]);
     }, []);
 
