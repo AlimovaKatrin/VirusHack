@@ -21,7 +21,6 @@ export default function ShortPatientCard(props) {
                     <Row>
                         <Col> <Button as={Link} to={`/${person._id}/pain-calendar`} variant="secondary" style={{ backgroundColor: "#047B7C" }} size="mg" active>Дневник боли</Button></Col>
                         <Col> <Button as={Link} to={`/${person._id}/plan`} variant="secondary" style={{ backgroundColor: "#047B7C" }} size="mg" active>План ухода</Button></Col>
-                        <Col> <Button as={Link} to={`/${person._id}/maps`} variant="secondary" style={{ backgroundColor: "#047B7C" }} size="mg" active>Карта</Button></Col>
 
                     </Row>
 
