@@ -6,12 +6,26 @@ import styles from './Card.module.css'
 import {
   Container, Row, Col, Image, Button, Card, CardDeck, Table, Form, FormControl, ListGroup
 } from 'react-bootstrap';
+<<<<<<< HEAD
+=======
+import { connect } from 'react-redux';
+import { recieveUserAC } from '../../redux/action-creator'
+>>>>>>> ed51528187742692906297556f92daa976f9f1af
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 
 const pdfMakeX = require('pdfmake/build/pdfmake.js');
 const pdfFontsX = require('pdfmake-unicode/dist/pdfmake-unicode.js');
 pdfMakeX.vfs = pdfFontsX.pdfMake.vfs;
+
+const ImageForm = ({ onSubmitHandler, onChangeHandler }) => {
+  return (
+    <Form onSubmit={onSubmitHandler}>
+      <FormControl type="file" name="file" onChange={onChangeHandler} />
+      <Button type="submit" variant="secondary" style={{ backgroundColor: "#047B7C", display: 'block' }} size="mg" active>Загрузить фото</Button>
+    </Form>
+  )
+}
 
 export class PatientCard extends Component {
   constructor(props) {
@@ -23,8 +37,8 @@ export class PatientCard extends Component {
       age: null,
       sex: '',
       phone: '',
-      photo: '',
-      diagnosis: '../img/patient1.png',
+      photo: null,
+      diagnosis: '',
       graphics: '../img/pain20200503.jpg',
       doctor: ''
     }
@@ -42,7 +56,7 @@ export class PatientCard extends Component {
       sex: patient[0].sex,
       phone: patient[0].phone,
       address: patient[0].address,
-      photo: '../img/patient1.png',
+      photo: patient[0].image,
       diagnosis: patient[0].diagnosis,
       graphics: '../img/pain20200503.jpg',
       doctor: patient[0].doctor
@@ -139,22 +153,29 @@ export class PatientCard extends Component {
     });
   }
 
-  onSubmitHandler = async (e) => {
+  onSubmitHandler = (e) => {
     e.preventDefault();
+    const { id } = this.props.match.params;
+    const userId = this.props.state.user._id;
     const data = new FormData();
     data.append('file', this.state.file);
-    const response = await fetch('/patient/upload', {
+    const response = fetch(`/patient/upload`, {
       method: 'POST',
-      body: data,
-    });
-    const imageUrl = await response.json();
-    this.setState({
-      file: imageUrl,
-    });
+      body: data
+    })
+      .then(res => res.json())
+      .then(imageUrl => fetch(`/patient/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrl: imageUrl.imageUrl, id, userId })
+      }))
+      .then(res => res.json())
+      .then(user => this.props.updateUser(user))
+      .catch(err => console.log(err));
   }
 
   render() {
-    // console.log(this.props);
+    console.log(this.state);
 
     return (
       <div>
@@ -173,6 +194,7 @@ export class PatientCard extends Component {
               <Row style={{ marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <CardDeck>
 
+<<<<<<< HEAD
                   <Card style={{ width: '330px' }}>
                     <Form onSubmit={this.onSubmitHandler}>
                       <FormControl type="file" name="file" onChange={this.onChangeHandler} />
@@ -183,6 +205,11 @@ export class PatientCard extends Component {
                     <Card.ImgOverlay>
                     </Card.ImgOverlay>
                   </Card>
+=======
+              <Card style={{ width: '330px' }}>
+                {this.state.photo ? <Card.Img src={this.state.photo} /> : <ImageForm onSubmitHandler={this.onSubmitHandler} onChangeHandler={this.onChangeHandler} />}
+              </Card>
+>>>>>>> ed51528187742692906297556f92daa976f9f1af
 
                   <Card>
                     <Card.Body style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', }}>
@@ -279,6 +306,7 @@ export class PatientCard extends Component {
 }
 
 const mapStateToProps = (state) => ({ state });
+const mapDispatchToProps = (dispatch) => ({ updateUser: (user) => dispatch(recieveUserAC(user)) });
 
-export default connect(mapStateToProps)(PatientCard);
+export default connect(mapStateToProps, mapDispatchToProps)(PatientCard);
 
