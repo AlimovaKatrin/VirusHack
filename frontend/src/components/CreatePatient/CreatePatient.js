@@ -21,6 +21,9 @@ class CreatePatient extends Component {
       address: '',
       phone: '',
       diagnosis: '',
+      doctorName: '',
+      doctorSurname: '',
+      doctorPhone: '',
     }
   }
 
@@ -30,14 +33,14 @@ class CreatePatient extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { name, surname, age, sex, address, phone, diagnosis } = this.state;
+    const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = this.state;
     const { _id } = this.props.state.user;
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name, surname, age, sex, address, phone, diagnosis,_id })
+      body: JSON.stringify({ name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone, _id })
     }
     const response = await fetch('/patient', requestOptions)
     const result = await response.json();
@@ -134,6 +137,30 @@ class CreatePatient extends Component {
             </Form.Label>
             <Col sm={10}>
               <Form.Control type="text" name="diagnosis" placeholder="Диагноз пациента (деменция, рак и т.д.)" onChange={this.handleChange} required />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="doctorName">
+            <Form.Label column sm={2}>
+              Имя лечащего врача
+          </Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="doctorSurname" placeholder="Имя лечащего врача" onChange={this.handleChange} required />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="doctorName">
+            <Form.Label column sm={2}>
+              Фамилия лечащего врача
+          </Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="doctorSurname" placeholder="Фамилия лечащего врача" onChange={this.handleChange} required />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="doctorPhone">
+            <Form.Label column sm={2}>
+              Телефон лечащего врача
+          </Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" name="doctorPhone" placeholder="Номер телефона лечащего врача" onChange={this.handleChange} required />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>

@@ -19,11 +19,10 @@ router
   })
   .post(async (req, res, next) => { //создать пациента
     try {
-      const { name, surname, sex, age, address, phone, diagnosis, _id } = req.body;
-      console.log(req.body);
+      const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = req.body;
 
       const patient = await Patient.create({
-        name, surname, sex, age, address, phone, diagnosis, responsiblePerson: _id,
+        name, surname, sex, age, address, phone, diagnosis, responsiblePerson: _id, doctor: { doctorName, doctorSurname, doctorPhone }
       });
       await Users.updateOne({ _id }, { $push: { patients: [patient] } });
       const updUser = await Users.findOne({ _id })
@@ -69,6 +68,7 @@ router
       next(error);
     }
   });
+  
 router.put('/:id/carePlan', async (req, res, next) => {
   try {
     const { id, schedules,userId } = req.body;
