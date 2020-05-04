@@ -3,9 +3,7 @@ import RangeSlider from 'react-bootstrap-range-slider';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import DatePicker from "react-datepicker";
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import ru from 'date-fns/locale/ru';
+
  
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
@@ -27,7 +25,6 @@ const PainCalendar = () => {
     event.preventDefault();
     const date = event.target.date.value;
     const description = event.target.description.value;
-    // const pain = event.target.pain.value;
     console.log(date, description, pain);
   };
 
