@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import NavBar from './components/NavBar/NavBar';
-
+import NavBar from './components/NavBar/NavBar'
+import Profile from './components/Profile/Profile'
+import CreatePatient from './components/CreatePatient/CreatePatient'
+import PrfilaktikaPadenij from './components/CreatePatient/CreatePatient'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,7 +13,9 @@ export default class App extends Component {
     console.log(this.props);
     return (
       <div>
-        <NavBar />
+        <Profile />
+
+        
       </div>
     )
   }

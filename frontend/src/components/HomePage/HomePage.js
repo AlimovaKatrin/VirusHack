@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/Row'
 
 class HomePage extends Component {
 
-
   render() {
     return (
       <Container>
@@ -51,33 +50,32 @@ class HomePage extends Component {
         <Row style={{ marginTop: '20px' }}>
           <CardDeck>
             <Card>
-              <Card.Img variant="top" src="../img/image002.jpg" /> 
+              <Card.Img variant="top" src="../img/image002.jpg" />
               <Card.Body>
                 <Card.Title>Карточка ухода пациента</Card.Title>
                 <Card.Text>
                   - Календарь с возможностью добавлять события<br />
-- Дневник боли с описанием боли и степень болезненности<br />
-- Отчет о состоянии больного
+                  - Дневник боли с описанием боли и степень болезненности<br />
+                  - Отчет о состоянии больного
               </Card.Text>
               </Card.Body>
 
             </Card>
             <Card>
-              <Card.Img variant="top" src="../img/image003.jpg" />
+            <Card.Img variant="top" src="../img/image003.jpg" />
               <Card.Body>
                 <Card.Title>Персонализированные рекомендации</Card.Title>
                 <Card.Text>
                   - Опрос о состоянии больного<br />
               - Персональные рекомендации на основе опроса<br />
-              - План ухода и запланированная
-возможность изменения входных данных<br />
+              - План ухода и запланированная возможность изменения входных данных<br />
                 </Card.Text>
               </Card.Body>
 
             </Card>
             <Card>
-              <Card.Img variant="top" src="../img/image001.jpg" />
-              <Card.Body>
+            <Card.Img variant="top" src="../img/image001.jpg" />              
+            <Card.Body>
                 <Card.Title>Обучение</Card.Title>
                 <Card.Text>
                   - База знаний<br />
