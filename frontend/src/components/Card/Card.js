@@ -1,24 +1,132 @@
 import React, { Component } from 'react'
 import styles from './Card.module.css'
 import {
-  Container, Row, Col, Image, ButtonGroup, Button, Card, CardDeck, Table
+  Container, Row, Col, Image, Button, Card, CardDeck, Table, Form, FormControl
 } from 'react-bootstrap';
+import { connect } from 'react-redux';
+
+import * as pdfMake from 'pdfmake/build/pdfmake';
+const pdfMakeX = require('pdfmake/build/pdfmake.js');
+const pdfFontsX = require('pdfmake-unicode/dist/pdfmake-unicode.js');
+pdfMakeX.vfs = pdfFontsX.pdfMake.vfs;
 
 export class PatientCard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      file: null
+      file: null,
+      name: '',
+      surname: '',
+      age: null,
+      sex: '',
+      phone: '',
+      photo: '',
+      diagnosis: '../img/patient1.png',
+      graphics: '../img/pain20200503.jpg',
     }
   }
 
-  // componentDidMount() {
-  //   const response = await fetch(`/patient/${id}`, {
-  //     method: 'GET'
-  //   })
-  //   const result = await response.json();
-  //   console.log(result);
-  // };
+  componentDidMount() {
+    const { patients } = this.props.state.user;
+    const { id } = this.props.match.params;
+    const patient = patients.filter(el => el._id === id);
+    console.log(patient);
+    this.setState({
+      name: patient[0].name,
+      surname: patient[0].surname,
+      age: patient[0].age,
+      sex: patient[0].sex,
+      phone: patient[0].phone,
+      address: patient[0].address,
+      photo: '../img/patient1.png',
+      diagnosis: patient[0].diagnosis,
+      graphics: '../img/pain20200503.jpg',
+    })
+  }
+
+  savePdf = async () => {
+    const toDataURL = url => fetch(url)
+      .then(response => response.blob())
+      .then(blob => new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve(reader.result)
+        reader.onerror = reject
+        reader.readAsDataURL(blob)
+      }))
+
+    let graphsUrl = await toDataURL(this.state.graphics)
+    let data = toDataURL(this.state.photo)
+
+      .then(dataUrl => {
+        const docDefinition = {
+          content: [
+            {
+              text: `Карточка пациента`,
+              style: 'subheader'
+            },
+            {
+              text: `${this.state.name} ${this.state.surname}
+              `, style: 'header'
+            },
+            {
+              alignment: 'justify',
+              columns: [
+                {
+                  text: `
+                         Возраст: ${this.state.age} 
+                         Пол: ${this.state.sex} 
+                         Телефон: ${this.state.phone} 
+                         `,
+                  style: 'main'
+                },
+                {
+                  image: dataUrl,
+                  width: 150
+                }
+              ],
+            },
+            {
+              text: `Диагноз
+              `, style: 'subheader'
+            },
+            {
+              text: `${this.state.diagnosis}`,
+              style: 'main'
+            },
+            {
+              text: `График боли
+              `, style: 'subheader'
+            },
+            {
+              image: graphsUrl,
+              width: 500
+            },
+
+          ],
+          styles: {
+            header: {
+              fontSize: 24,
+              alignment: 'center',
+              bold: true,
+            },
+            subheader: {
+              fontSize: 18,
+              alignment: 'center',
+              bold: true,
+            },
+            main: {
+              fontSize: 14,
+              alignment: 'left'
+            }
+          }
+        };
+
+        let today = new Date().toISOString().slice(0, 10)
+        let filename = this.state.surname + this.state.name[0] + '_' + today
+        pdfMake.createPdf(docDefinition).download(`${filename}.pdf`);
+      }
+      )
+  }
 
   onChangeHandler = (e) => {
     this.setState({
@@ -41,13 +149,10 @@ export class PatientCard extends Component {
   }
 
   render() {
+    // console.log(this.props);
+
     return (
       <div>
-        {/* <form onSubmit={this.onSubmitHandler}>
-          <input type="file" name="file" onChange={this.onChangeHandler} />
-          <button type='submit'>Upload</button>
-        </form>
-        {this.state.file ? <img src={this.state.file.imageUrl} /> : null} */}
 
         <Container style={{ border: "3px solid lightgrey" }}>
 
@@ -61,7 +166,12 @@ export class PatientCard extends Component {
             <CardDeck>
 
               <Card style={{ width: '330px' }}>
-                <Card.Img src='https://memepedia.ru/wp-content/uploads/2016/03/large_p19d7nh1hm1i37tnuim11ebqo5c1.jpg' />
+                <Form onSubmit={this.onSubmitHandler}>
+                  <FormControl type="file" name="file" onChange={this.onChangeHandler} />
+                  <Button type="submit" variant="secondary" style={{ backgroundColor: "#047B7C", display: 'block' }} size="mg" active>Загрузить фото</Button>
+                </Form>
+                {this.state.file ? <img src={this.state.file.imageUrl} /> : null}
+                {/* <Card.Img src='https://memepedia.ru/wp-content/uploads/2016/03/large_p19d7nh1hm1i37tnuim11ebqo5c1.jpg' /> */}
                 <Card.ImgOverlay>
                 </Card.ImgOverlay>
               </Card>
@@ -106,20 +216,20 @@ export class PatientCard extends Component {
                 </thead>
                 <tbody>
                   <tr className="table-success" style={{ textAlign: 'center' }}>
-                    <td>Мага</td>
-                    <td>Магомедович</td>
-                    <td>Мужчина</td>
-                    <td >90</td>
-                    <td>Россия, 123456, Санкт-Петербург, пр. Вознесения д.6 кв.23</td>
-                    <td>+7(999)000-00</td>
+                    <td>{this.state.name}</td>
+                    <td>{this.state.surname}</td>
+                    <td>{this.state.sex}</td>
+                    <td>{this.state.age}</td>
+                    <td>{this.state.address}</td>
+                    <td>{this.state.phone}</td>
                   </tr>
                 </tbody>
               </Table>
               <Card.Title style={{ textAlign: 'center', color: "#047B7C", marginTop: '20px' }}>Диагноз</Card.Title>
               <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
-              <Card.Text style={{ marginLeft: '10px', marginRight: '10px', marginBottom: '10px' }}>
-                Гастроэзофагеальная рефлюксная болезнь, эрозивная форма (степень С), осложненное течение (К21.0). Язва абдоминального отдела пищевода.
-    </Card.Text>
+              <Card.Text style={{ marginLeft: '10px', marginRight: '10px', marginBottom: '10px', textAlign: 'center' }}>
+                {this.state.diagnosis}
+              </Card.Text>
             </Card>
           </Row>
 
@@ -137,7 +247,7 @@ export class PatientCard extends Component {
               <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>План ухода</Button>
             </Col>
             <Col>
-              <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Выгрузка в PDF</Button>
+              <Button onClick={this.savePdf} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Скачать PDF</Button>
             </Col>
           </Row>
         </Container>
@@ -147,5 +257,7 @@ export class PatientCard extends Component {
   }
 }
 
-export default PatientCard;
+const mapStateToProps = (state) => ({ state });
+
+export default connect(mapStateToProps)(PatientCard);
 
