@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
+import * as pdfMake from 'pdfmake/build/pdfmake';
 
-import styles from './Card.module.css'
 import {
   Container, Row, Col, Image, Button, Card, CardDeck, Table, Form, FormControl, ListGroup
 } from 'react-bootstrap';
 
 import { recieveUserAC } from '../../redux/action-creator'
 
-import * as pdfMake from 'pdfmake/build/pdfmake';
 
 const pdfMakeX = require('pdfmake/build/pdfmake.js');
 const pdfFontsX = require('pdfmake-unicode/dist/pdfmake-unicode.js');
@@ -45,7 +44,6 @@ export class PatientCard extends Component {
     const { patients } = this.props.state.user;
     const { id } = this.props.match.params;
     const patient = patients.filter(el => el._id === id);
-    console.log(patient);
     this.setState({
       name: patient[0].name,
       surname: patient[0].surname,
@@ -176,8 +174,6 @@ export class PatientCard extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     return (
       <div>
 
@@ -263,10 +259,13 @@ export class PatientCard extends Component {
 
               <Row style={{ marginBottom: '20px' }}>
                 <Col>
-                  <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Дневник боли</Button>
+                  <Button as={Link} to={`/${this.props.match.params.id}/pain-calendar`} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Дневник боли</Button>
                 </Col>
                 <Col>
-                  <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>План ухода</Button>
+                  <Button as={Link} to={`/${this.props.match.params.id}/plan`} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>План ухода</Button>
+                </Col>
+                <Col>
+                  <Button as={Link} to={`/ask`} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Пройти опрос</Button>
                 </Col>
                 <Col>
                   <Button onClick={this.savePdf} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Скачать PDF</Button>

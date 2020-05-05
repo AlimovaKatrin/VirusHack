@@ -1,6 +1,5 @@
 const start = new Date('December 19, 1995 03:24:00');
 const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
-console.log('start,start', start);
 
 export const calendars = [
     {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
@@ -6,11 +7,10 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
+
 import './InfoBase.css';
 
-
 class PrfilaktikaPadenij extends Component {
-
 
   render() {
     return (
@@ -39,12 +39,6 @@ class PrfilaktikaPadenij extends Component {
         </p>
         </Alert>
 
-
-
-
-
-
-
         <h2><strong>Как снизить риски падения </strong></h2>
         <div class="navi"></div>
         <h4><strong>Избавьтесь от лишних предметов</strong></h4>
@@ -65,8 +59,6 @@ class PrfilaktikaPadenij extends Component {
           Помните о тормозах:инвалидное кресло, кровать, детская коляска должны стоять на тормозе, когда не используются, чтобы при опирании на них человек не упал.
         </p>
         </Alert>
-
-
         <h4><strong>Главное расстояние – вытянутой руки  </strong></h4>
 Все необходимое больному человеку – книга, стакан воды, телефон, пульт от телевизора, ходунки и другие необходимые для него предметы, – должно находиться в доступной близости.
         <h4><strong> </strong><strong>Свободу коридорам </strong></h4>
@@ -76,16 +68,12 @@ class PrfilaktikaPadenij extends Component {
         <h4><strong>Больше света</strong></h4>
 Поставьте у изголовья кровати торшер, настольную лампу, бра так, чтобы человек мог до них дотянуться. В темное время суток может пригодиться ночник.
 <h4></h4>
-
         <Alert variant={'warning'}>
           <Alert.Heading>Важно!</Alert.Heading>
           <p>
             Большинство падений происходит ночью! Оставляйте включенной лампы или ночники.
         </p>
         </Alert>
-
-
-
         <h4><strong>Обустройте ванную комнату</strong></h4>
 Постелите на пол и на дно ванны нескользящие коврики, прикрутите ручки или небольшие поручни к стенам возле унитаза и на стене над ванной. Постарайтесь избавиться от порога у входа в комнату.
         <h4><strong>Следите за домашними животными и детьми</strong></h4>
@@ -131,9 +119,6 @@ class PrfilaktikaPadenij extends Component {
             Ходунки и трости должны быть по росту и удобны в использовании больным.
         </p>
         </Alert>
-
-
-
         <h2><strong>Нужно </strong></h2>
         <div class="navi"></div>
         <ul>
@@ -145,16 +130,12 @@ class PrfilaktikaPadenij extends Component {
           <li>Записывайте информацию о падениях: когда человек упал и где. Проанализируйте, почему это могло случиться, что ему могло помешать.</li>
           <li>Проверьте, услышите ли вы пациента, если он позовет вас, и как быстро сможете подойти к нему. Будьте готовы прийти на помощь!</li>
         </ul>
-      
-
         <Alert variant={'warning'}>
           <Alert.Heading>Важно!</Alert.Heading>
           <p>
           Рядом с больным должно быть сигнализирующее устройство, с помощью которого он может вас позвать. Например, колокольчик или беспроводной дверной звонок.
         </p>
         </Alert>
-
-
 
         <h2><strong>Нельзя </strong></h2>
         <div class="navi"></div>

@@ -38,16 +38,15 @@ function ClendarPerWeek(props) {
             },
             state: scheduleData.state
         };
-        props.addCurrentDayEvent(schedule)
+        // props.addCurrentDayEvent(schedule)
         
         cal.current.calendarInst.createSchedules([schedule]);
     }, []);
 
     const onBeforeDeleteSchedule = useCallback(res => {
-        // console.log('onBeforeDeleteSchedule', res);
 
         const { id, calendarId } = res.schedule;
-        // удаляется ячейка
+ 
         cal.current.calendarInst.deleteSchedule(id, calendarId);
     }, []);
 
@@ -97,7 +96,6 @@ function ClendarPerWeek(props) {
 
     const templates = {
         time: function (schedule) {
-            // console.log('templates', schedule);
             return _getTimeTemplate(schedule, false);
         },
         alldayTitle: function () {

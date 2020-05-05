@@ -8,7 +8,6 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Form from 'react-bootstrap/Form'
-// рег пациента
 
 class CreatePatient extends Component {
   constructor(props) {
@@ -33,10 +32,9 @@ class CreatePatient extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state);
-    
+
     const { name, surname, age, sex, address, phone, diagnosis, doctorName, doctorSurname, doctorPhone } = this.state;
-    const { _id } = this.props.state.user; // КЛЮЧИТЬ REDUX И ВЫТАСКИВАТЬ ИЗ СТОРА ID А ДЛЯ ПЕРЕДАЧИ НА БЭК!!!!!
+    const { _id } = this.props.state.user; 
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -172,7 +170,6 @@ class CreatePatient extends Component {
           </Form.Group>
         </Form>
       </Container>)
-
   }
 }
 

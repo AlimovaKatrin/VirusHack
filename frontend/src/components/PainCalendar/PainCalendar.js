@@ -35,7 +35,7 @@ const PainCalendar = (props) => {
   const [pain, setPain] = useState(0);
   const [date, setDate] = useState(new Date().toLocaleString('ru-RU'));
   const [description, setDescription] = useState('');
-  const data = [
+  const [data,setData] = useState([
     {
       date: '01/05/2020',
       pain: 1,
@@ -60,23 +60,8 @@ const PainCalendar = (props) => {
       date: '05/05/2020',
       pain: 3,
       description: 'Боль в ногах',
-    },
-    {
-      date: '06/05/2020',
-      pain: 4,
-      description: 'Боль в ногах',
-    },
-    {
-      date: '07/05/2020',
-      pain: 2,
-      description: 'Спазмы в коленях',
-    },
-    {
-      date: '05/05/2020',
-      pain: 5,
-      description: 'Боль в коленях',
-    },
-  ];
+    }
+  ]);
 
   const config = {
     padding: 'auto',
@@ -95,20 +80,11 @@ const PainCalendar = (props) => {
     },
   };
 
-  // useEffect(async () => {
-  //   const id = 'privet';
-  //   const response = await fetch(`/patient/${id}/pain`, {
-  //     method: 'GET',
-  //   });
-  //   const result = await response.json();
-  //   console.log(result);
-  // }, []);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const date = event.target.date.value;
     const description = event.target.description.value;
-    console.log(date, description, pain);
+    setData(()=>[...data,{date, description, pain}])
   };
 
   return (
@@ -182,11 +158,15 @@ const PainCalendar = (props) => {
             </tr>
           </thead>
           <tbody>
+            {data.map(el=>{
+              return(
             <tr className="table-success">
-              <td>{date}</td>
-              <td>{description}</td>
-              <td>{pain}</td>
+              <td>{el.date}</td>
+              <td>{el.description}</td>
+              <td>{el.pain}</td>
             </tr>
+              )
+            })}
           </tbody>
         </Table>
       </Container>

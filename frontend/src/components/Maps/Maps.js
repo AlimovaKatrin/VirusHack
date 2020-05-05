@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, ListGroup, Row, Col, Container } from 'react-bootstrap';
+import { ListGroup, Row, Col, Container } from 'react-bootstrap';
 import { YMaps, Map, ZoomControl, SearchControl } from 'react-yandex-maps';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 class Maps extends Component {
   constructor(props) {

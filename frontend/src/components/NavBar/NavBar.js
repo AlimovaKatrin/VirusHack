@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Switch,
   Route,
@@ -16,6 +16,8 @@ import CreatePatient from '../CreatePatient/CreatePatient';
 import PatientCardDetail from '../Card/Card';
 import Maps from '../Maps/Maps';
 import Contacts from '../Contacts/Contacts';
+import DiagMorse from '../DiagMorse/DiagMorse';
+import PrfilaktikaPadenij from '../InfoBase/PrfilaktikaPadenij';
 
 import {
   Navbar, Nav, Form, FormControl, Button
@@ -23,7 +25,6 @@ import {
 
 const NavBar = (props) => {
   const { state } = props;
-  console.log(props)
   return (
     <>
       <Navbar style={{ backgroundColor: "#047B7C" }} variant="dark">
@@ -49,6 +50,8 @@ const NavBar = (props) => {
         <Route path="/profile" component={Profile} />
         <Route path="/create-patient" component={CreatePatient} />
         <Route path="/contacts" component={Contacts} />
+        <Route exact path="/ask" component={DiagMorse} />
+        <Route path="/ask/profilktica" component={PrfilaktikaPadenij} />
         <Route path="/:id/patient-card" component={PatientCardDetail} />
         <Route path="/:id/pain-calendar" component={PainCalendar} />
         <Route path="/:id/plan" component={CarePlanCommon} />

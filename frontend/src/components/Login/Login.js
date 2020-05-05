@@ -37,7 +37,6 @@ export class Login extends Component {
       body: JSON.stringify({ email, password }),
     });
     const result = await response.json();
-    console.log(await result);
 
     if (result.user) {
       this.props.recieveUser(await result.user);
@@ -52,11 +51,9 @@ export class Login extends Component {
   handleChange = (event) => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
-    console.log(this.state);
   };
 
   render() {
-    console.log(this.props);
 
     return (
       <Container style={loginContainer} className="mt-5 p-3">
