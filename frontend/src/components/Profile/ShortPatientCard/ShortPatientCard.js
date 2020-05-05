@@ -12,8 +12,8 @@ export default function ShortPatientCard(props) {
           <Card.Title style={{ color: "#047B7C" }}><Link to={`/${person._id}/patient-card`}>{person.name}</Link></Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{person.age}</Card.Subtitle>
           <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
+            Диагноз:{person.diagnosis}<br></br>
+            Лечащий врач: { person.doctor.doctorName }  {person.doctor.doctorSurname}
 </Card.Text>
 
           <Row>
