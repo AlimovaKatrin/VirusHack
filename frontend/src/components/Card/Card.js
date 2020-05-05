@@ -6,11 +6,8 @@ import styles from './Card.module.css'
 import {
   Container, Row, Col, Image, Button, Card, CardDeck, Table, Form, FormControl, ListGroup
 } from 'react-bootstrap';
-<<<<<<< HEAD
-=======
-import { connect } from 'react-redux';
+
 import { recieveUserAC } from '../../redux/action-creator'
->>>>>>> ed51528187742692906297556f92daa976f9f1af
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 
@@ -170,7 +167,11 @@ export class PatientCard extends Component {
         body: JSON.stringify({ imageUrl: imageUrl.imageUrl, id, userId })
       }))
       .then(res => res.json())
-      .then(user => this.props.updateUser(user))
+      .then(user =>{
+        this.props.updateUser(user.user)
+        this.props.history.push('/profile')
+      } 
+      )
       .catch(err => console.log(err));
   }
 
@@ -194,23 +195,9 @@ export class PatientCard extends Component {
               <Row style={{ marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <CardDeck>
 
-<<<<<<< HEAD
-                  <Card style={{ width: '330px' }}>
-                    <Form onSubmit={this.onSubmitHandler}>
-                      <FormControl type="file" name="file" onChange={this.onChangeHandler} />
-                      <Button type="submit" variant="secondary" style={{ backgroundColor: "#047B7C", display: 'block' }} size="mg" active>Загрузить фото</Button>
-                    </Form>
-                    {this.state.file ? <img src={this.state.file.imageUrl} /> : null}
-                    {/* <Card.Img src='https://memepedia.ru/wp-content/uploads/2016/03/large_p19d7nh1hm1i37tnuim11ebqo5c1.jpg' /> */}
-                    <Card.ImgOverlay>
-                    </Card.ImgOverlay>
-                  </Card>
-=======
               <Card style={{ width: '330px' }}>
                 {this.state.photo ? <Card.Img src={this.state.photo} /> : <ImageForm onSubmitHandler={this.onSubmitHandler} onChangeHandler={this.onChangeHandler} />}
               </Card>
->>>>>>> ed51528187742692906297556f92daa976f9f1af
-
                   <Card>
                     <Card.Body style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', }}>
                       <Card.Title>Ответственный за пациента</Card.Title>

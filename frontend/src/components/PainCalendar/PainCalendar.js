@@ -8,12 +8,6 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { LineChart } from '@opd/g2plot-react';
 
-<<<<<<< HEAD
-
-
-import "react-datepicker/dist/react-datepicker.css";
-=======
->>>>>>> ed51528187742692906297556f92daa976f9f1af
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

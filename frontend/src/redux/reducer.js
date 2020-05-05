@@ -8,7 +8,7 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case RECIEVE_USER:
-            return { ...state, user: action.user };
+            return { ...state, ['user']: action.user };
         case ADD_CURRENT_DAY_EVENT:
     
                 return { ...state, ['carePlan']: [...state.carePlan,action.day] };

@@ -14,6 +14,8 @@ class Profile extends Component {
 
   render() {
     const { patients } = this.props.state.user
+  console.log(this.props);
+  
     return (<Container fluid>
 
       <Row>
