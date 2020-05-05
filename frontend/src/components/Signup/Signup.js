@@ -95,7 +95,7 @@ class Signup extends Component {
                 <Form.Control
                   name="phone"
                   type="tel"
-                  pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
+                  // pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
                   value={this.state.phone}
                   placeholder="Введите Номер Телефона в формате"
                   onChange={this.handleChange}

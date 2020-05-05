@@ -1,10 +1,10 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
-import { render } from "react-dom";
+
 import { connect } from 'react-redux';
 import { addCurrentDayEventAC } from '../../../redux/action-creator';
 
 import Calendar from "@toast-ui/react-calendar";
-// import { ISchedule, ICalendarInfo } from "tui-calendar";
+
 
 import "tui-calendar/dist/tui-calendar.css";
 import "tui-date-picker/dist/tui-date-picker.css";
@@ -13,43 +13,16 @@ import "tui-time-picker/dist/tui-time-picker.css";
 import { calendars, schedules } from './mockup'
 
 function ClendarPerWeek(props) {
-    const [trigger, setTrigger] = useState(false);
-    const [data, setData] = useState();
-    const cal = useRef(null);
-    console.log('-------------', props);
-    
-        // useEffect(() => {
-        //     const fetchData = async () => {
-        //         const response = await fetch(
-        //             `/patient/${props.prop.match.params.id}/carePlan`, {
-        //             method: 'PUT',
-        //             headers: {
-        //                'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify({
-        //                 id: props.prop.match.params.id,
-        //                 userId: props.prop.state.user._id,
-        //                 schedules: props.state.carePlan
-        //             })
-        //         }
-        //         );
-        //         console.log(await response.json());
 
-        //     };
-        //     fetchData()
-        // },[props.state.carePlan])
-    
-    // клик на созданную ячейку в календаре
+    const [data, setData] = useState();
+
+    const cal = useRef(null);
     const onClickSchedule = useCallback(e => {
+        
         console.log('onClickSchedule', e);
     }, []);
 
-    const onBeforeCreateSchedule = useCallback(scheduleData => {
-        // console.log('onBeforeCreateSchedule', scheduleData);
-        // событие создается
-
-
-
+    const onBeforeCreateSchedule = useCallback((scheduleData )=> {
         const schedule = {
             id: String(Math.random()),
             title: scheduleData.title,
@@ -65,8 +38,8 @@ function ClendarPerWeek(props) {
             },
             state: scheduleData.state
         };
-        setTrigger(!trigger);
         props.addCurrentDayEvent(schedule)
+        
         cal.current.calendarInst.createSchedules([schedule]);
     }, []);
 
@@ -79,8 +52,6 @@ function ClendarPerWeek(props) {
     }, []);
 
     const onBeforeUpdateSchedule = useCallback(e => {
-        // console.log('onBeforeUpdateSchedule', e);
-
         const { schedule, changes } = e;
 
         cal.current.calendarInst.updateSchedule(

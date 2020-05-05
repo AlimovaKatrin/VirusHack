@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
+
 import styles from './Card.module.css'
 import {
-  Container, Row, Col, Image, Button, Card, CardDeck, Table, Form, FormControl
+  Container, Row, Col, Image, Button, Card, CardDeck, Table, Form, FormControl, ListGroup
 } from 'react-bootstrap';
-import { connect } from 'react-redux';
+
 import { recieveUserAC } from '../../redux/action-creator'
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
+
 const pdfMakeX = require('pdfmake/build/pdfmake.js');
 const pdfFontsX = require('pdfmake-unicode/dist/pdfmake-unicode.js');
 pdfMakeX.vfs = pdfFontsX.pdfMake.vfs;
@@ -33,10 +37,11 @@ export class PatientCard extends Component {
       photo: null,
       diagnosis: '',
       graphics: '../img/pain20200503.jpg',
+      doctor: ''
     }
   }
-
   componentDidMount() {
+    if (!this.props.state.user) this.props.history.push('/login')
     const { patients } = this.props.state.user;
     const { id } = this.props.match.params;
     const patient = patients.filter(el => el._id === id);
@@ -51,6 +56,7 @@ export class PatientCard extends Component {
       photo: patient[0].image,
       diagnosis: patient[0].diagnosis,
       graphics: '../img/pain20200503.jpg',
+      doctor: patient[0].doctor
     })
   }
 
@@ -83,10 +89,10 @@ export class PatientCard extends Component {
               columns: [
                 {
                   text: `
-                         Возраст: ${this.state.age} 
-                         Пол: ${this.state.sex} 
-                         Телефон: ${this.state.phone} 
-                         `,
+                  Возраст: ${this.state.age} 
+                  Пол: ${this.state.sex} 
+                  Телефон: ${this.state.phone} 
+                  `,
                   style: 'main'
                 },
                 {
@@ -161,7 +167,11 @@ export class PatientCard extends Component {
         body: JSON.stringify({ imageUrl: imageUrl.imageUrl, id, userId })
       }))
       .then(res => res.json())
-      .then(user => this.props.updateUser(user))
+      .then(user =>{
+        this.props.updateUser(user.user)
+        this.props.history.push('/profile')
+      } 
+      )
       .catch(err => console.log(err));
   }
 
@@ -171,96 +181,111 @@ export class PatientCard extends Component {
     return (
       <div>
 
-        <Container style={{ border: "3px solid lightgrey" }}>
+        <Row>
+          <br></br>
+          <Col xs={10}>
+            <Container style={{ border: "3px solid lightgrey" }}>
 
-          <Row style={{ marginTop: '20px', color: "#047B7C" }}>
-            <Col><h1 style={{ textAlign: 'center', color: "#047B7C" }}>Расширенная карточка пациента</h1>
-              <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
-            </Col>
-          </Row>
+              <Row style={{ marginTop: '20px', color: "#047B7C" }}>
+                <Col><h1 style={{ textAlign: 'center', color: "#047B7C" }}>Расширенная карточка пациента</h1>
+                  <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
+                </Col>
+              </Row>
 
-          <Row style={{ marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <CardDeck>
+              <Row style={{ marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <CardDeck>
 
               <Card style={{ width: '330px' }}>
                 {this.state.photo ? <Card.Img src={this.state.photo} /> : <ImageForm onSubmitHandler={this.onSubmitHandler} onChangeHandler={this.onChangeHandler} />}
               </Card>
-
-              <Card>
-                <Card.Body style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', }}>
-                  <Card.Title>Ответственный за пациента</Card.Title>
-                  <Card.Text>
-                    ФИО: Марь Ивановна<br />
+                  <Card>
+                    <Card.Body style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', }}>
+                      <Card.Title>Ответственный за пациента</Card.Title>
+                      <Card.Text>
+                        ФИО: Марья Ивановна<br />
                     Телефон: +7(777)777-77<br />
-                  </Card.Text>
-                  <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
-                  <Card.Title>Лечащий врач пациента</Card.Title>
-                  <Card.Text>
-                    ФИО: Доктор Айболит<br />
+                      </Card.Text>
+                      <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
+                      <Card.Title>Лечащий врач пациента</Card.Title>
+                      <Card.Text>
+                        ФИО: {this.state.doctor.doctorName} {this.state.doctor.doctorSurname}<br />
                     Телефон: +7(123)456-78<br />
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+
+                </CardDeck>
+              </Row>
+
+              <Row style={{ marginTop: '20px', color: "#047B7C" }}>
+                <Col><h2 style={{ textAlign: 'center', color: "#047B7C" }}>Информация о пациенте</h2>
+                  <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
+                </Col>
+              </Row>
+
+              <Row style={{ marginTop: '20px', marginLeft: '5px', marginRight: '5px' }}>
+                <Card style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr style={{ textAlign: 'center' }}>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Пол</th>
+                        <th>Возраст</th>
+                        <th>Адрес проживания</th>
+                        <th>Телефон</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="table-success" style={{ textAlign: 'center' }}>
+                        <td>{this.state.name}</td>
+                        <td>{this.state.surname}</td>
+                        <td>{this.state.sex}</td>
+                        <td>{this.state.age}</td>
+                        <td>{this.state.address}</td>
+                        <td>{this.state.phone}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                  <Card.Title style={{ textAlign: 'center', color: "#047B7C", marginTop: '20px' }}>Диагноз</Card.Title>
+                  <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
+                  <Card.Text style={{ marginLeft: '10px', marginRight: '10px', marginBottom: '10px', textAlign: 'center' }}>
+                    {this.state.diagnosis}
                   </Card.Text>
-                </Card.Body>
-              </Card>
+                </Card>
+              </Row>
 
-            </CardDeck>
-          </Row>
+              <Row style={{ marginTop: '20px', color: "#047B7C" }}>
+                <Col><h2 style={{ textAlign: 'center', color: "#047B7C" }}>Панель управления</h2>
+                  <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
+                </Col>
+              </Row>
 
-          <Row style={{ marginTop: '20px', color: "#047B7C" }}>
-            <Col><h2 style={{ textAlign: 'center', color: "#047B7C" }}>Информация о пациенте</h2>
-              <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
-            </Col>
-          </Row>
+              <Row style={{ marginBottom: '20px' }}>
+                <Col>
+                  <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Дневник боли</Button>
+                </Col>
+                <Col>
+                  <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>План ухода</Button>
+                </Col>
+                <Col>
+                  <Button onClick={this.savePdf} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Скачать PDF</Button>
+                </Col>
+              </Row>
+            </Container>
+          </Col>
 
-          <Row style={{ marginTop: '20px', marginLeft: '5px', marginRight: '5px' }}>
-            <Card style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}>
-              <Table striped bordered hover>
-                <thead>
-                  <tr style={{ textAlign: 'center' }}>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Пол</th>
-                    <th>Возраст</th>
-                    <th>Адрес проживания</th>
-                    <th>Телефон</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="table-success" style={{ textAlign: 'center' }}>
-                    <td>{this.state.name}</td>
-                    <td>{this.state.surname}</td>
-                    <td>{this.state.sex}</td>
-                    <td>{this.state.age}</td>
-                    <td>{this.state.address}</td>
-                    <td>{this.state.phone}</td>
-                  </tr>
-                </tbody>
-              </Table>
-              <Card.Title style={{ textAlign: 'center', color: "#047B7C", marginTop: '20px' }}>Диагноз</Card.Title>
-              <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
-              <Card.Text style={{ marginLeft: '10px', marginRight: '10px', marginBottom: '10px', textAlign: 'center' }}>
-                {this.state.diagnosis}
-              </Card.Text>
-            </Card>
-          </Row>
+          <Col>
+            <ListGroup>
+              <ListGroup.Item>Важные ссылки</ListGroup.Item>
+              <Button as={Link} to="/contacts" style={{ color: "black", backgroundColor: "#EAEFF6" }}><img src="https://img.icons8.com/ios/50/000000/notification-center.png"/><br></br>Памятки</Button>
+              <Button as={Link} to="/contacts" style={{ color: "black", backgroundColor: "#ebd7d1" }}><img src="https://img.icons8.com/ios/50/000000/phone.png" /><br></br>Телефоны патронажных служб</Button>
+              <Button as={Link} to="/contacts" style={{ color: "black", backgroundColor: "#E96A3C" }}><img src="https://img.icons8.com/ios/50/000000/warning-shield.png" /><br></br>Телефоны горячих линий</Button>
+              <Button as={Link} to={`/${this.props.match.params.id}/maps`} style={{ backgroundColor: "#44A8A8" }}><img src="https://img.icons8.com/ios/50/000000/waypoint-map.png" /><br></br>Адреса аптек</Button>
 
-          <Row style={{ marginTop: '20px', color: "#047B7C" }}>
-            <Col><h2 style={{ textAlign: 'center', color: "#047B7C" }}>Панель управления</h2>
-              <hr style={{ width: '60%', marginLeft: '20%', marginRight: '20%', height: '1px', background: '#fff' }} />
-            </Col>
-          </Row>
-
-          <Row style={{ marginBottom: '20px' }}>
-            <Col>
-              <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Дневник боли</Button>
-            </Col>
-            <Col>
-              <Button variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>План ухода</Button>
-            </Col>
-            <Col>
-              <Button onClick={this.savePdf} variant="secondary" style={{ backgroundColor: "#047B7C", marginLeft: 'auto', marginRight: 'auto', display: 'block' }} size="mg" active>Скачать PDF</Button>
-            </Col>
-          </Row>
-        </Container>
+            </ListGroup>
+          </Col>
+        </Row>
 
       </div>
     )

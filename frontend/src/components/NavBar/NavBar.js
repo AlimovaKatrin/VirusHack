@@ -14,7 +14,8 @@ import CarePlanCommon from '../Plan/Common/CarePlanCommon';
 import PainCalendar from '../PainCalendar/PainCalendar';
 import CreatePatient from '../CreatePatient/CreatePatient';
 import PatientCardDetail from '../Card/Card';
-import Maps from '../Maps/Maps'
+import Maps from '../Maps/Maps';
+import Contacts from '../Contacts/Contacts';
 
 import {
   Navbar, Nav, Form, FormControl, Button
@@ -47,6 +48,7 @@ const NavBar = (props) => {
         <Route path="/signup" component={Signup} />
         <Route path="/profile" component={Profile} />
         <Route path="/create-patient" component={CreatePatient} />
+        <Route path="/contacts" component={Contacts} />
         <Route path="/:id/patient-card" component={PatientCardDetail} />
         <Route path="/:id/pain-calendar" component={PainCalendar} />
         <Route path="/:id/plan" component={CarePlanCommon} />

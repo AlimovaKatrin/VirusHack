@@ -39,42 +39,42 @@ const PainCalendar = (props) => {
     {
       date: '01/05/2020',
       pain: 1,
-      description: 'Headache on monday',
+      description: 'Головная боль',
     },
     {
       date: '02/05/2020',
       pain: 4,
-      description: 'Broken Hands',
+      description: 'Мигрень',
     },
     {
       date: '03/05/2020',
       pain: 2,
-      description: 'Headache on monday',
+      description: 'Головная боль',
     },
     {
       date: '04/05/2020',
       pain: 6,
-      description: 'Stomache',
+      description: 'Боль в желудке',
     },
     {
       date: '05/05/2020',
       pain: 3,
-      description: 'Something wrong with legs',
+      description: 'Боль в ногах',
     },
     {
       date: '06/05/2020',
       pain: 4,
-      description: 'Something wrong with legs',
+      description: 'Боль в ногах',
     },
     {
       date: '07/05/2020',
       pain: 2,
-      description: 'Something wrong with legs',
+      description: 'Спазмы в коленях',
     },
     {
       date: '05/05/2020',
       pain: 5,
-      description: 'Something wrong with legs',
+      description: 'Боль в коленях',
     },
   ];
 

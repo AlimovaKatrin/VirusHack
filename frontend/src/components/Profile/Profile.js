@@ -2,138 +2,34 @@ import React, { Component } from 'react';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { Link } from 'react-router-dom'
 
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap'
 import { connect } from 'react-redux';
 
 import ShortCard from './ShortPatientCard/ShortPatientCard'
 
-const pdfMakeX = require('pdfmake/build/pdfmake.js');
-const pdfFontsX = require('pdfmake-unicode/dist/pdfmake-unicode.js');
-pdfMakeX.vfs = pdfFontsX.pdfMake.vfs;
-
-//   получить пациента /patient GET
 class Profile extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.state.user) this.props.history.push('/login')
-
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: 'Татьяна',
-      surname: 'Пельтцер',
-      age: 73,
-      sex: 'Женщина',
-      phone: '8954557896',
-      photo: '../img/patient1.png',
-      diagnosis: 'Падения',
-      graphics: '../img/pain20200503.jpg',
-    };
-  }
-
-  savePdf = async () => {
-    const toDataURL = url => fetch(url)
-      .then(response => response.blob())
-      .then(blob => new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result)
-        reader.onerror = reject
-        reader.readAsDataURL(blob)
-      }))
-
-    let graphsUrl = await toDataURL(this.state.graphics)
-    let data = toDataURL(this.state.photo)
-
-      .then(dataUrl => {
-        const docDefinition = {
-          content: [
-            {
-              text: `Карточка пациента`,
-              style: 'subheader'
-            },
-            {
-              text: `${this.state.name} ${this.state.surname}
-              `, style: 'header'
-            },
-            {
-              alignment: 'justify',
-              columns: [
-                {
-                  text: `
-                         Возраст: ${this.state.age} 
-                         Пол: ${this.state.sex} 
-                         Телефон: ${this.state.phone} 
-                         `,
-                  style: 'main'
-                },
-                {
-                  image: dataUrl,
-                  width: 150
-                }
-              ],
-            },
-            {
-              text: `Диагноз
-              `, style: 'subheader'
-            },
-            {
-              text: `${this.state.diagnosis}`,
-              style: 'main'
-            },
-            {
-              text: `График боли
-              `, style: 'subheader'
-            },
-            {
-              image: graphsUrl,
-              width: 500
-            },
-
-          ],
-          styles: {
-            header: {
-              fontSize: 24,
-              alignment: 'center',
-              bold: true,
-            },
-            subheader: {
-              fontSize: 18,
-              alignment: 'center',
-              bold: true,
-            },
-            main: {
-              fontSize: 14,
-              alignment: 'left'
-            }
-          }
-        };
-
-        let today = new Date().toISOString().slice(0, 10)
-        let filename = this.state.surname + this.state.name[0] + '_' + today
-        pdfMake.createPdf(docDefinition).download(`${filename}.pdf`);
-      }
-      )
   }
 
   render() {
     const { patients } = this.props.state.user
+  console.log(this.props);
+  
     return (<Container fluid>
-      <br></br>
+
       <Row>
-        {patients ? patients.map(person => { return (<Col><ShortCard key={person._id} person={person} /> </Col>) }) : <div>Вы можете добавить пациетна</div>}
-        <Col><Button as={Link} to="/create-patient" variant="warning"><img src="https://img.icons8.com/ios/50/000000/plus.png" /><br></br>Добавить пациента</Button></Col>
+        <br></br>
+          {patients ? patients.map(person => { return (<Col><br/><ShortCard key={person._id} person={person} /></Col>) }) : <div>Вы можете добавить пациетна</div>}
+        <Col xs={2}>
+          <ListGroup>
+            <Button as={Link} to="/contacts" style={{color:"black", backgroundColor: "#ebd7d1" }}><img src="https://img.icons8.com/ios/50/000000/warning-shield.png"/><br></br>Телефоны горячих линий</Button>
+            <Button as={Link} to="/contacts" style={{color:"black", backgroundColor: "#EAEFF6" }}><img src="https://img.icons8.com/ios/50/000000/phone.png"/><br></br>Телефоны патронажных служб</Button>
+            <Button as={Link} to="/create-patient" size="lg" variant="warning"><img src="https://img.icons8.com/ios/50/000000/plus.png" /><br></br>Добавить пациента</Button>
 
+          </ListGroup>
+        </Col>
       </Row>
-      <br></br>
-
-      <Button
-        variant="primary"
-        onClick={this.savePdf}
-      >
-        Скачать pdf
-    </Button>
-
     </Container>)
 
   }
