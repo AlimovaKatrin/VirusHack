@@ -1,11 +1,9 @@
 
-import React, { useCallback, useRef, useEffect, useState } from "react";
-import { render } from "react-dom";
+import React from "react";
 
 import { Card,ListGroup } from 'react-bootstrap'
 
 export default function ClendarPerDay(props) {
-console.log( new Date(new Date().setHours(new Date().getHours())));
 const {color} = props 
   return (
     <>
@@ -21,4 +19,3 @@ const {color} = props
     </>
   );
 }
-// view={'day'}

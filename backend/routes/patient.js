@@ -9,7 +9,6 @@ router
   .route('/') // карточки профайла
   .get(async (req, res, next) => {
     try {
-      console.log(req.session);
       const { _id } = req.session.user;
       const user = await Users.findOne({ _id });
       res.send({ patients: user.patients });
@@ -33,7 +32,6 @@ router
 router.put('/:id', async (req, res, next) => { // добавить фото
   try {
     const { id, userId, imageUrl } = req.body;
-    console.log(req.body);
     await Patient.updateOne({ _id: id }, { $set: { image: imageUrl } });
     const patient = await Patient.findOne({ _id: id });
     await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
@@ -81,7 +79,6 @@ router
 router.put('/:id/carePlan', async (req, res, next) => {
   try {
     const { id, schedules, userId } = req.body;
-    console.log(userId);
     await Patient.updateOne({ _id: id }, { $set: { carePlan: schedules } });
     const patient = await Patient.findOne({ _id: id });
     await Users.updateOne({ _id: userId, 'patients._id': id }, { $set: { 'patients.$': [patient] } });
