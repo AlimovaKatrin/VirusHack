@@ -16,10 +16,15 @@ export class CarePlanCommon extends Component {
     render() {
         if(!this.props.state.user) {this.props.history.push('/login')}
 
+        const headers = {
+            color: '#047B7C',
+          }
         return (
             <div>
-                <h1>План ухода</h1>
-                <Container>
+                <Container className="mt-2">
+                <h1 style={headers} className="text-center">
+              План Ухода
+            </h1>
                     <Row>
                         <Col sm={10}><ClendarPerWeek prop={this.props}/></Col>
                         <Col sm={1}>
